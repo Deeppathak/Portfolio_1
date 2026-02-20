@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Deep Pathak | Mechanical Engineer</title>
+  <meta name="description" content="Portfolio of Deep Pathak - Mechanical Engineer specializing in CAD, FEA Simulation, Signal Processing, and Systems Engineering." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'IBM Plex Sans', sans-serif; color: #0a0a0a; background: #fafafa; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'IBM Plex Mono', monospace; }
+    a { text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    input, textarea, button { font-family: inherit; }
+
+    /* Particle canvas */
+    #particles-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* Wrapper */
+    .site-wrapper { position: relative; z-index: 1; max-width: 1320px; margin: 0 auto; }
+
+    /* ── Navbar ── */
+    .navbar { position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 100; width: 100%; max-width: 1320px; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; border-bottom: 1px solid #e0e0e0; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .navbar-brand { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #0a0a0a; }
+    .navbar-links { display: none; gap: 2.5rem; }
+    .navbar-links a { font-size: 0.77rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: #666; transition: color 0.2s; }
+    .navbar-links a:hover { color: #0a0a0a; }
+    .navbar-links .btn-contact { background: #0a0a0a; color: #fff; padding: 0.5rem 1.25rem; border-radius: 3px; }
+    .navbar-links .btn-contact:hover { color: #fff; }
+    @media (min-width: 768px) { .navbar-links { display: flex; } }
+    @media (max-width: 767px) { .navbar { padding: 1rem 1.5rem; } }
+
+    /* ── Section Shared ── */
+    .section-header { display: flex; align-items: baseline; gap: 2rem; padding: 2.75rem 4rem; border-bottom: 1px solid #e0e0e0; }
+    .section-number { min-width: 32px; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: #999; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; }
+    @media (max-width: 767px) { .section-header { padding: 2rem 2rem; } }
+
+    /* ── Fade In ── */
+    .fade-target { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-target.visible { opacity: 1; transform: translateY(0); }
+
+    /* scroll-mt for anchor fix */
+    [id] { scroll-margin-top: 100px; }
+
+    /* ── Hero ── */
+    .hero { display: flex; align-items: center; min-height: 100vh; padding: 72px 4rem 0; border-bottom: 1px solid #e0e0e0; background: rgba(255,255,255,0.75); }
+    .hero-inner { display: flex; flex-direction: column; align-items: flex-start; gap: 2.5rem; width: 100%; padding: 5rem 0; }
+    .hero-avatar { width: 180px; height: 180px; border-radius: 50%; overflow: hidden; border: 2px solid #e0e0e0; box-shadow: 0 4px 24px rgba(0,0,0,0.1); flex-shrink: 0; }
+    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+    .hero-subtitle { display: flex; align-items: center; gap: 0.75rem; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: #999; margin-bottom: 1.75rem; }
+    .hero-subtitle::before { content: ''; display: block; width: 1.5rem; height: 1px; background: #999; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 3.8vw, 3.2rem); font-weight: 900; line-height: 1; letter-spacing: -0.03em; color: #0a0a0a; margin-bottom: 1.25rem; }
+    .hero-desc { max-width: 440px; font-size: 0.92rem; font-weight: 300; line-height: 1.85; color: #666; margin: 2rem 0 2.25rem; }
+    .hero-desc strong { font-weight: 500; color: #0a0a0a; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #0a0a0a; color: #fff; font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 3px; transition: all 0.25s; }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.85; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: transparent; color: #0a0a0a; font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 3px; border: 1px solid #e0e0e0; transition: all 0.25s; }
+    .btn-outline:hover { transform: translateY(-2px); border-color: #0a0a0a; }
+    @media (min-width: 768px) { .hero-inner { flex-direction: row; align-items: center; gap: 4rem; } }
+    @media (max-width: 767px) { .hero { padding: 72px 2rem 0; } }
+
+    /* ── Typewriter ── */
+    .typewriter-wrap { min-height: 1.7em; font-size: 0.95rem; font-weight: 300; color: #666; }
+    .typewriter-wrap .typed { font-weight: 500; color: #0a0a0a; }
+    .cursor-blink { display: inline-block; width: 2px; height: 0.95em; background: #0a0a0a; vertical-align: text-bottom; animation: blink 0.9s step-end infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* ── About ── */
+    .about-content { display: grid; grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 2rem; }
+    .about-img-wrap { overflow: hidden; border-radius: 3px; border: 1px solid #e0e0e0; }
+    .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: grayscale(8%); }
+    .about-text p { font-size: 0.92rem; font-weight: 300; line-height: 1.85; color: #666; margin-bottom: 1.25rem; }
+    .about-text a { font-weight: 500; color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
+    .about-text strong { font-weight: 500; color: #0a0a0a; }
+    .achievement-row { display: grid; grid-template-columns: 90px 1fr; align-items: start; gap: 1rem; padding: 1rem 0; border-top: 1px solid #e0e0e0; }
+    .achievement-row:last-child { border-bottom: 1px solid #e0e0e0; margin-bottom: 1.75rem; }
+    .achievement-label { white-space: nowrap; font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #0a0a0a; padding-top: 0.1rem; }
+    .achievement-desc { font-size: 0.86rem; line-height: 1.65; color: #666; margin: 0; }
+    .social-links { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 1.5rem; }
+    .social-link { display: inline-flex; align-items: center; gap: 0.375rem; border: 1px solid #e0e0e0; border-radius: 3px; padding: 0.5rem 0.875rem; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #333; transition: all 0.2s; }
+    .social-link:hover { border-color: #0a0a0a; color: #0a0a0a; }
+    .social-link svg { width: 13px; height: 13px; }
+    @media (min-width: 768px) {
+      .about-content { grid-template-columns: 380px 1fr; gap: 4.5rem; padding: 4rem; }
+      .about-img-wrap { position: sticky; top: 88px; aspect-ratio: 3/4; }
+    }
+
+    /* ── Skills ── */
+    .skills-grid { display: grid; grid-template-columns: 1fr; border-top: 1px solid #e0e0e0; }
+    .skill-col { padding: 2.25rem 2rem; border-bottom: 1px solid #e0e0e0; }
+    .skill-col-title { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #999; margin-bottom: 1.25rem; }
+    .skill-item { padding: 0.5rem 0; font-size: 0.88rem; color: #333; border-bottom: 1px solid #e0e0e0; transition: all 0.2s; }
+    .skill-item:last-child { border-bottom: none; }
+    .skill-item:hover { padding-left: 0.25rem; color: #0a0a0a; }
+    @media (min-width: 640px) { .skills-grid { grid-template-columns: 1fr 1fr; } .skill-col { border-right: 1px solid #e0e0e0; } .skill-col:nth-child(2n) { border-right: none; } }
+    @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(4, 1fr); } .skill-col { border-right: 1px solid #e0e0e0; border-bottom: none; } .skill-col:last-child { border-right: none; } }
+
+    .tools-section { border-top: 1px solid #e0e0e0; padding: 2.75rem 2rem 3rem; }
+    .tools-section-title { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #999; margin-bottom: 1.75rem; }
+    .tools-grid { display: flex; flex-wrap: wrap; gap: 0.875rem; }
+    .tool-card { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 88px; border: 1px solid #e0e0e0; border-radius: 3px; background: #fff; padding: 1rem 0.625rem; text-align: center; transition: all 0.25s; }
+    .tool-card:hover { transform: translateY(-2px); border-color: #0a0a0a; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+    .tool-card img { width: 42px; height: 42px; object-fit: contain; }
+    .tool-card span { font-size: 0.72rem; font-weight: 500; line-height: 1.3; color: #333; }
+    @media (min-width: 768px) { .tools-section { padding: 2.75rem 4rem 3rem; } }
+
+    /* ── Education ── */
+    .edu-content { padding: 0 2rem 3.5rem; }
+    .edu-row { display: grid; grid-template-columns: 1fr; gap: 0.25rem; padding: 1.75rem 0; border-bottom: 1px solid #e0e0e0; align-items: start; }
+    .edu-date { font-size: 0.78rem; color: #999; padding-top: 0.125rem; }
+    .edu-degree { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #0a0a0a; margin-bottom: 0.25rem; }
+    .edu-degree a { color: #0a0a0a; text-decoration: underline; text-underline-offset: 3px; }
+    .edu-school { font-size: 0.85rem; color: #666; margin-bottom: 0.375rem; }
+    .edu-desc { font-size: 0.78rem; line-height: 1.65; color: #999; }
+    .edu-badge { display: inline-block; white-space: nowrap; border-radius: 9999px; padding: 0.25rem 0.75rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .edu-badge--progress { border: 1px solid #e0e0e0; color: #333; }
+    .edu-badge--gold { border: 1px solid #c09a35; color: #a07d20; }
+    .edu-badge--extra { border: 1px solid #e0e0e0; color: #333; }
+    @media (min-width: 768px) { .edu-content { padding: 0 4rem 3.5rem; } .edu-row { grid-template-columns: 140px 1fr auto; gap: 2rem; } .edu-badge { margin-top: 0; } }
+
+    /* ── Projects ── */
+    .project-row { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid #e0e0e0; }
+    .project-img { overflow: hidden; aspect-ratio: 16/10; border-bottom: 1px solid #e0e0e0; }
+    .project-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(12%); transition: transform 0.6s; }
+    .project-img img:hover { transform: scale(1.03); }
+    .project-info { display: flex; flex-direction: column; justify-content: center; padding: 2rem; }
+    .project-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #999; margin-bottom: 0.75rem; }
+    .project-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; line-height: 1.3; color: #0a0a0a; margin-bottom: 0.75rem; }
+    .project-desc { font-size: 0.86rem; font-weight: 300; line-height: 1.8; color: #666; margin-bottom: 1.25rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1.25rem; }
+    .tag { border: 1px solid #e0e0e0; border-radius: 9999px; padding: 0.25rem 0.625rem; font-size: 0.66rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #333; }
+    .project-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #0a0a0a; transition: gap 0.2s; }
+    .project-link:hover { gap: 0.75rem; }
+    .project-link svg { width: 14px; height: 14px; }
+    .project-progress { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #0a0a0a; opacity: 0.5; cursor: default; }
+    @media (min-width: 768px) {
+      .project-row { grid-template-columns: 1fr 1fr; }
+      .project-img { border-bottom: none; border-right: 1px solid #e0e0e0; aspect-ratio: auto; }
+      .project-info { padding: 3rem; }
+    }
+    .project-row--reversed .project-info { order: 2; }
+    .project-row--reversed .project-img { order: 1; border-right: none; }
+    @media (min-width: 768px) {
+      .project-row--reversed .project-info { order: 1; }
+      .project-row--reversed .project-img { order: 2; border-right: none; border-left: 1px solid #e0e0e0; }
+    }
+
+    /* Thesis dual image */
+    .thesis-images { display: grid; grid-template-rows: 1fr 1fr; overflow: hidden; border-bottom: 1px solid #e0e0e0; }
+    .thesis-images img:first-child { border-bottom: 1px solid #e0e0e0; }
+    .thesis-images img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); }
+    .thesis-images .emd-img { object-fit: contain; background: #fff; filter: none; }
+    @media (min-width: 768px) {
+      .thesis-row { grid-template-columns: 1fr 1fr; }
+      .thesis-images { border-bottom: none; border-right: 1px solid #e0e0e0; }
+    }
+
+    /* Gallery */
+    .gallery-section { border-top: 1px solid #e0e0e0; padding: 2.5rem 2rem 3.5rem; }
+    .gallery-title { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #999; margin-bottom: 1.75rem; }
+    .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .gallery-card { overflow: hidden; border: 1px solid #e0e0e0; border-radius: 3px; background: #fff; transition: all 0.25s; }
+    .gallery-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+    .gallery-card img { width: 100%; height: 160px; object-fit: cover; filter: grayscale(10%); }
+    .gallery-card-body { padding: 1rem; }
+    .gallery-card h4 { font-size: 0.85rem; font-weight: 600; color: #0a0a0a; margin-bottom: 0.25rem; }
+    .gallery-card p { font-size: 0.76rem; color: #666; }
+    @media (min-width: 640px) { .gallery-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .gallery-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    @media (min-width: 768px) { .gallery-section { padding: 2.5rem 4rem 3.5rem; } }
+
+    /* ── Contact ── */
+    .contact-content { display: grid; grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 2rem; }
+    .contact-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #0a0a0a; margin-bottom: 0.75rem; }
+    .contact-desc { font-size: 0.88rem; font-weight: 300; line-height: 1.8; color: #666; margin-bottom: 1.75rem; }
+    .contact-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem 0; border-bottom: 1px solid #e0e0e0; font-size: 0.84rem; color: #666; transition: all 0.2s; }
+    .contact-link:hover { padding-left: 0.25rem; color: #0a0a0a; }
+    .contact-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.375rem; }
+    .form-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: #999; }
+    .form-input { border: 1px solid #e0e0e0; border-radius: 3px; background: #fff; padding: 0.75rem 0.875rem; font-size: 0.9rem; color: #0a0a0a; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: #0a0a0a; }
+    textarea.form-input { min-height: 110px; resize: none; }
+    .btn-submit { align-self: flex-start; cursor: pointer; border: none; background: #0a0a0a; color: #fff; padding: 0.875rem 2rem; border-radius: 3px; font-size: 0.76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.25s; }
+    .btn-submit:hover { transform: translateY(-2px); opacity: 0.85; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
+    @media (min-width: 768px) { .contact-content { grid-template-columns: 1fr 1.2fr; gap: 4.5rem; padding: 4rem; } }
+
+    /* ── Footer ── */
+    .site-footer { display: flex; flex-direction: column; align-items: center; justify-content: space-between; border-top: 1px solid #e0e0e0; background: rgba(255,255,255,0.9); padding: 1.5rem 2rem; font-size: 0.76rem; color: #999; gap: 0.5rem; }
+    @media (min-width: 640px) { .site-footer { flex-direction: row; } }
+    @media (min-width: 768px) { .site-footer { padding: 1.5rem 4rem; } }
+
+    /* ── Section BG ── */
+    .section-bg { background: rgba(255,255,255,0.8); border-bottom: 1px solid #e0e0e0; }
+  </style>
+<script>(function(){let f=Symbol.for("__v0_runtime_injected");if(window[f])return;window[f]=!0;function c(e){window.debug&&console.log("[vm:postMessage:out]",e),window.parent.postMessage(Object.assign({__v0_remote__:1},e),"*")}let w="",y=document.location.hash,_=window.self!==window.top;function d(){if(w!==document.location.href&&(w=document.location.href,c({type:"location_change",href:w,canGoForward:window.navigation?.canGoForward,canGoBack:window.navigation?.canGoBack})),_){let e=window.location.hash;if(e!==y&&(y=e,e&&e!=="#")){let t=document.querySelector(e);t&&t.scrollIntoView()}}}new MutationObserver(d).observe(document,{childList:!0,subtree:!0,attributes:!0,characterData:!0}),d(),window.addEventListener("popstate",d),window.addEventListener("hashchange",d),window.addEventListener("message",function(e){let t=e.data;if(!(!t||typeof t!="object"||!t.__v0_remote__))switch(window.debug&&console.log("[vm:postMessage:in]",t),t.type){case"navigate_back":window.history.back();break;case"navigate_forward":window.history.forward();break;case"navigate_to":window.location.href=t.href;break;case"reload":location.reload();break}});function m(){c({type:"app_navigation_state",loading:!1}),g()}window.addEventListener("load",m),document.readyState==="complete"&&m(),requestAnimationFrame(()=>{requestAnimationFrame(()=>{c({type:"page_ready",url:window.location.href})})});let u="sb-5gmh3e495937";if(u){let a=function(i,s){let n=typeof i=="string"?i:i.toString(),o=new URL(n,window.location.href),l=t.some(b=>o.pathname.startsWith(b)),p=o.hostname.endsWith(".vercel.run");return!l||p?new e(i,s):(o.protocol="wss:",o.hostname=`${u}.vercel.run`,o.port="",new e(o.toString(),s))};var S=a;let e=window.WebSocket,t=["/__nextjs/ws","/_next/webpack-hmr"];a.prototype=e.prototype,Object.assign(a,e),window.WebSocket=a}window.V0_S_ID=u;function g(){if("next"in window&&window.next&&window.next.version){let e=document.createElement("style");e.textContent="nextjs-portal { display: none !important }",document.head.appendChild(e)}}let h=Symbol.for("__v0_snapshot_capturer_initialized");if(!window[h]){let t=function(n){if(n)try{c({type:"snapshot_capture",data:n})}catch{}},s=function(n=2e3){setTimeout(async()=>{try{await i;let o=await e();o&&t(o)}catch{}},n)};var k=t,D=s;window[h]=!0;async function e(){try{if(!window.freezeDry)return null;let n=await window.freezeDry.freezeDry(window.document);return n=n.replace(/<link rel="preload" as="script" [^>]*>/g,"").replace(/<link rel="original" href="[^>]+>/g,""),n}catch{return null}}async function a(){let n=document.createElement("script");return n.src="/v0-vm-assets/freeze-dry.umd.js",n.async=!0,document.head.appendChild(n),new Promise((o,l)=>{n.onload=()=>{o()},n.onerror=p=>{l(p)}})}let i=a();document.readyState==="complete"?s():window.addEventListener("load",()=>{s()})}let r=Object.getOwnPropertyDescriptor(Document.prototype,"cookie")||Object.getOwnPropertyDescriptor(HTMLDocument.prototype,"cookie");r&&r.configurable&&r.get&&r.set&&Object.defineProperty(document,"cookie",{get(){return r.get.call(document)},set(e){let t=e.replace(/;\s*SameSite=(Lax|Strict|None)/gi,"");t+="; SameSite=None",/;\s*Secure/i.test(t)||(t+="; Secure"),r.set.call(document,t)}})})();
+</script></head>
+<body>
+
+<!-- Particle Canvas -->
+<canvas id="particles-canvas"></canvas>
+
+<div class="site-wrapper">
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar">
+    <a href="#hero" class="navbar-brand">Deep Pathak</a>
+    <ul class="navbar-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact" class="btn-contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ═══ HERO ═══ -->
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <div class="hero-avatar">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-02-19%20at%206.40.57%20PM-9jfTX6DUqPTHhSE6e4NhCgxIADc5WL.jpeg" alt="Deep Pathak in engineering lab" />
+        </div>
+        <div>
+          <div class="hero-subtitle">Mechanical Engineer &middot; Berlin, Germany</div>
+          <h1>Deep<br>Pathak</h1>
+          <div class="typewriter-wrap">
+            Specialising in <span class="typed" id="typed-text"></span><span class="cursor-blink"></span>
+          </div>
+          <p class="hero-desc">
+            3+ years of hands-on product development in CAD design, FEA simulation, and tolerance analysis &mdash; currently at <strong>Nuventura</strong> working on medium-voltage switchgear systems.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary">View Projects</a>
+            <a href="https://www.linkedin.com/in/deep-pathak-502918175/" target="_blank" rel="noopener noreferrer" class="btn-outline">LinkedIn</a>
+            <a href="#contact" class="btn-outline">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="section-bg">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2 class="section-title">About Me</h2>
+      </div>
+      <div class="about-content fade-target">
+        <div class="about-img-wrap">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-02-19%20at%206.20.24%20PM-DrPpaBWVkoIlshwgogNSeJOIZ3FuZL.jpeg" alt="Deep Pathak operating high-speed camera in engineering lab" />
+        </div>
+        <div class="about-text">
+          <p>I'm a mechanical engineer combining deep technical expertise with systems-level thinking. My work spans safety-critical switchgear product development, vibration reliability research, and applying data science to real engineering challenges.</p>
+          <p>Currently interning at <strong>Nuventura</strong> and contributing to the <a href="https://greenbear.berlin/#" target="_blank" rel="noopener noreferrer">Green Bear</a> Formula Student electric race car team at HTW Berlin.</p>
+
+          <div class="achievement-row">
+            <div class="achievement-label">15% &darr;</div>
+            <p class="achievement-desc">3 years of hands-on experience in mechanical product development &mdash; specializing in 3D CAD, tolerance analysis, DFA/DFMEA, and rapid design iteration for medium-voltage switchgear, achieving up to <strong>15% reduction in design cycle time</strong>.</p>
+          </div>
+          <div class="achievement-row">
+            <div class="achievement-label">&euro;100K</div>
+            <p class="achievement-desc">Collaborating with Nuventura's engineering team to optimize circuit breaker and drive assemblies &mdash; identified and resolved <strong>critical late-stage design faults</strong>, preventing potential losses of ~&euro;100,000 and improving product reliability by 20%.</p>
+          </div>
+          <div class="achievement-row">
+            <div class="achievement-label">Signal</div>
+            <p class="achievement-desc">Leading vibration-based reliability evaluation in my Master's thesis &mdash; applying <strong>signal processing techniques</strong> (HHT, FFT, PSD) to detect structural looseness in switchgear mechanical drives, resulting in quantified improvements in component endurance and fatigue life.</p>
+          </div>
+          <div class="achievement-row" style="border-bottom: 1px solid #e0e0e0; margin-bottom: 1.75rem;">
+            <div class="achievement-label">PLM</div>
+            <p class="achievement-desc"><strong>Strong cross-functional team collaborator</strong> with PLM knowledge from design to manufacturing, production, and quality.</p>
+          </div>
+
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/deep-pathak-502918175/" target="_blank" rel="noopener noreferrer" class="social-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href="mailto:pathakdeep31@gmail.com" class="social-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              Email
+            </a>
+            <a href="https://github.com/Deeppathak" target="_blank" rel="noopener noreferrer" class="social-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+            <a href="https://greenbear.berlin/#" target="_blank" rel="noopener noreferrer" class="social-link">Green Bear FS</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SKILLS ═══ -->
+    <section id="skills" class="section-bg">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Skills &amp; Toolset</h2>
+      </div>
+      <div class="fade-target">
+        <div class="skills-grid">
+          <div class="skill-col">
+            <div class="skill-col-title">CAD &amp; Design</div>
+            <div class="skill-item">3D CAD Design</div>
+            <div class="skill-item">Tolerance Analysis</div>
+            <div class="skill-item">GD&amp;T</div>
+            <div class="skill-item">DFA / DFMEA</div>
+            <div class="skill-item">Assembly Design</div>
+            <div class="skill-item">Technical Drawing</div>
+            <div class="skill-item">Design Iteration</div>
+          </div>
+          <div class="skill-col">
+            <div class="skill-col-title">Simulation &amp; Analysis</div>
+            <div class="skill-item">Finite Element Analysis</div>
+            <div class="skill-item">CFD</div>
+            <div class="skill-item">Structural Analysis</div>
+            <div class="skill-item">Thermal Analysis</div>
+            <div class="skill-item">Fatigue Analysis</div>
+            <div class="skill-item">FFT &amp; PSD</div>
+            <div class="skill-item">Vibration Testing</div>
+          </div>
+          <div class="skill-col">
+            <div class="skill-col-title">Programming &amp; Data</div>
+            <div class="skill-item">Python</div>
+            <div class="skill-item">Signal Processing</div>
+            <div class="skill-item">Machine Learning</div>
+            <div class="skill-item">Embedded Systems</div>
+            <div class="skill-item">Arduino / C</div>
+            <div class="skill-item">Data Analysis</div>
+            <div class="skill-item">HHT / EMD</div>
+          </div>
+          <div class="skill-col">
+            <div class="skill-col-title">Engineering Process</div>
+            <div class="skill-item">Systems Engineering</div>
+            <div class="skill-item">Product Development</div>
+            <div class="skill-item">Reliability Engineering</div>
+            <div class="skill-item">Root Cause Analysis</div>
+            <div class="skill-item">Cross-functional Teams</div>
+            <div class="skill-item">Technical Documentation</div>
+            <div class="skill-item">Formula Student</div>
+          </div>
+        </div>
+
+        <div class="tools-section">
+          <div class="tools-section-title">Software &amp; Tools</div>
+          <div class="tools-grid">
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Fusion_360_Logo.png" alt="Fusion 360" /><span>Fusion 360</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/d/df/PTC_Creo_logo.svg" alt="PTC Creo" /><span>PTC Creo</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/AutoCad_logo.svg/512px-AutoCad_logo.svg.png" alt="AutoCAD" /><span>AutoCAD</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/ANSYS_logo_without-blur.png/640px-ANSYS_logo_without-blur.png" alt="ANSYS" /><span>ANSYS</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matlab_Logo.png/640px-Matlab_Logo.png" alt="MATLAB" /><span>MATLAB</span></div>
+            <div class="tool-card"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" /><span>Python</span></div>
+            <div class="tool-card"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt="NumPy" /><span>NumPy</span></div>
+            <div class="tool-card"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt="Pandas" /><span>Pandas</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Matplotlib_icon.svg/512px-Matplotlib_icon.svg.png" alt="Matplotlib" /><span>Matplotlib</span></div>
+            <div class="tool-card"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg" alt="PyTorch" /><span>PyTorch</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/512px-Arduino_Logo.svg.png" alt="Arduino" /><span>Arduino</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/512px-Scikit_learn_logo_small.svg.png" alt="Scikit-learn" /><span>Scikit-learn</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d2/SolidWorks_Logo.svg/512px-SolidWorks_Logo.svg.png" alt="SolidWorks" /><span>SolidWorks</span></div>
+            <div class="tool-card"><img src="https://damassets.autodesk.net/content/dam/autodesk/www/product-imagery/badge-75x75/2025-workspace-icons/inventor-professional-2025-workspace-icon-75x75.png" alt="Autodesk Inventor" /><span>Autodesk Inventor</span></div>
+            <div class="tool-card"><img src="https://damassets.autodesk.net/content/dam/autodesk/www/product-imagery/badge-75x75/2025-workspace-icons/vault-basic-2025-workspace-icon-75x75.png" alt="Autodesk Vault" /><span>Autodesk Vault</span></div>
+            <div class="tool-card"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/PTC_logo.svg" alt="PTC Windchill" /><span>PTC Windchill</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EDUCATION ═══ -->
+    <section id="education" class="section-bg">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="edu-content fade-target">
+        <div class="edu-row">
+          <div class="edu-date">2023 &ndash; Present</div>
+          <div>
+            <div class="edu-degree">M.Sc. Systems Engineering</div>
+            <div class="edu-school">FH S&uuml;dwestfalen &mdash; Soest, Germany</div>
+            <div class="edu-desc">German Grade: 2.0 &middot; Thesis: Vibration-Based Reliability Evaluation of Switchgear using Signal Processing techniques (HHT, FFT, PSD). Focus: system-level design validation, cross-functional engineering, product lifecycle.</div>
+          </div>
+          <div><span class="edu-badge edu-badge--progress">In Progress</span></div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-date">2017 &ndash; 2021</div>
+          <div>
+            <div class="edu-degree">B.E. Mechanical Engineering</div>
+            <div class="edu-school">Gujarat Technological University, India</div>
+            <div class="edu-desc">GPA: 9.4 / 10 &middot; Ranked among top graduates. Foundation in thermodynamics, manufacturing, machine design, and fluid mechanics.</div>
+          </div>
+          <div><span class="edu-badge edu-badge--gold">Silver Medal</span></div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-date">2023 &ndash; Present</div>
+          <div>
+            <div class="edu-degree">Formula Student &mdash; <a href="https://greenbear.berlin/#" target="_blank" rel="noopener noreferrer">Green Bear Racing</a></div>
+            <div class="edu-school">HTW Berlin</div>
+            <div class="edu-desc">Mechanical design, component integration, and structural validation of an electric Formula Student race car.</div>
+          </div>
+          <div><span class="edu-badge edu-badge--extra">Extracurricular</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section id="projects" class="section-bg">
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="fade-target">
+
+        <!-- Thesis -->
+        <div class="project-row thesis-row">
+          <div class="thesis-images">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-TO5L7gVFU1gNFFFPzx9W61kcHx8llL.png" alt="Accelerometer sensor mounted on switchgear drive mechanism" />
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-02-19%20at%209.50.34%20PM-mmM438xmJ6MRs2LoiXkNqFq2Rs60eR.jpeg" alt="Empirical Mode Decomposition" class="emd-img" />
+          </div>
+          <div class="project-info">
+            <div class="project-label">Master Thesis &middot; Ongoing</div>
+            <div class="project-name">Vibration Analysis of Mechanical Drive in Switchgear</div>
+            <p class="project-desc">Detecting mechanical looseness in medium-voltage switchgear drive assemblies using advanced signal processing. Accelerometers are mounted on the drive mechanism to capture vibration data during switching operations. Signal decomposition via Hilbert-Huang Transform (HHT) and Empirical Mode Decomposition (EMD) extracts intrinsic mode functions, enabling detection of subtle structural anomalies that conventional FFT/PSD methods may miss &mdash; improving reliability assessment before costly field failures occur.</p>
+            <div class="project-tags">
+              <span class="tag">Signal Processing</span>
+              <span class="tag">HHT / EMD</span>
+              <span class="tag">FFT &amp; PSD</span>
+              <span class="tag">Vibration Analysis</span>
+              <span class="tag">Python</span>
+              <span class="tag">Reliability Engineering</span>
+            </div>
+            <span class="project-progress">In Progress &mdash; FH S&uuml;dwestfalen / Nuventura</span>
+          </div>
+        </div>
+
+        <!-- Project 1 -->
+        <div class="project-row project-row--reversed">
+          <div class="project-info">
+            <div class="project-label">Project 01</div>
+            <div class="project-name">Embedded Air Quality Measurement System</div>
+            <p class="project-desc">Developed an embedded system to monitor and report AQI using PM1.0, PM2.5, PM10.0, temperature, and humidity sensors. Designed signal acquisition pipeline and data visualization dashboard.</p>
+            <div class="project-tags">
+              <span class="tag">Embedded Systems</span>
+              <span class="tag">Sensor Fusion</span>
+              <span class="tag">Python</span>
+              <span class="tag">Data Analysis</span>
+            </div>
+            <a href="https://github.com/Deeppathak/Embedded-Air-Quality-Measurement-System" target="_blank" rel="noopener noreferrer" class="project-link">
+              View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="project-img">
+            <img src="https://huggingface.co/spaces/DeepPathak/mechanical-marvels-green-bear-gears/resolve/main/images/joypi.jpg" alt="Embedded Air Quality System" />
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-row">
+          <div class="project-img" style="border-right: 1px solid #e0e0e0;">
+            <img src="https://huggingface.co/spaces/DeepPathak/mechanical-marvels-green-bear-gears/resolve/main/images/MRS-1.jpg" alt="Movie Recommender System" />
+          </div>
+          <div class="project-info">
+            <div class="project-label">Project 02</div>
+            <div class="project-name">Movie Recommender System</div>
+            <p class="project-desc">Personalized recommendations using PyTorch and collaborative filtering on the MovieLens dataset &mdash; demonstrating ML application in e-commerce personalization with strong recall and precision metrics.</p>
+            <div class="project-tags">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">Collaborative Filtering</span>
+            </div>
+            <a href="https://github.com/Deeppathak/Recommender_system_-Movielens_dataset_with_Pytorch-" target="_blank" rel="noopener noreferrer" class="project-link">
+              View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-row project-row--reversed">
+          <div class="project-info">
+            <div class="project-label">Project 03</div>
+            <div class="project-name">Wheel Trolley Bracket FEA Analysis</div>
+            <p class="project-desc">Comprehensive static and fatigue analyses on a trolley bracket under 500kg load. Identified critical stress concentrations at fillet transitions, optimized geometry, and validated redesign through iterative FEA &mdash; preventing structural failure.</p>
+            <div class="project-tags">
+              <span class="tag">FEA</span>
+              <span class="tag">ANSYS</span>
+              <span class="tag">Fatigue Analysis</span>
+              <span class="tag">Design Optimization</span>
+            </div>
+            <a href="https://github.com/Deeppathak/FEA" target="_blank" rel="noopener noreferrer" class="project-link">
+              View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="project-img">
+            <img src="https://huggingface.co/spaces/DeepPathak/mechanical-marvels-green-bear-gears/resolve/main/images/wheeltroly.png" alt="Wheel Trolley FEA" />
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="gallery-section">
+          <div class="gallery-title">CAD &amp; Simulation Gallery</div>
+          <div class="gallery-grid">
+            <div class="gallery-card">
+              <img src="https://huggingface.co/spaces/DeepPathak/mechanical-marvels-green-bear-gears/resolve/main/images/gear.png" alt="Gear Box Design" />
+              <div class="gallery-card-body">
+                <h4>Gear Box Design</h4>
+                <p>3:1 reduction gearbox with optimized tooth profile designed from first principles</p>
+              </div>
+            </div>
+            <div class="gallery-card">
+              <img src="https://huggingface.co/spaces/DeepPathak/mechanical-marvels-green-bear-gears/resolve/main/images/heatfin.png" alt="Heat Fins Thermal Analysis" />
+              <div class="gallery-card-body">
+                <h4>Heat Fins Thermal Analysis</h4>
+                <p>Steady-state thermal simulation of heat sink fins for electronics cooling</p>
+              </div>
+            </div>
+            <div class="gallery-card">
+              <img src="https://huggingface.co/spaces/DeepPathak/mechanical-marvels-green-bear-gears/resolve/main/images/fancfd.png" alt="Air Propeller CFD" />
+              <div class="gallery-card-body">
+                <h4>Air Propeller CFD</h4>
+                <p>Velocity and thrust force analysis using computational fluid dynamics</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" style="background: rgba(255,255,255,0.8);">
+      <div class="section-header" style="border-bottom: 1px solid #e0e0e0;">
+        <span class="section-number">05</span>
+        <h2 class="section-title">Get In Touch</h2>
+      </div>
+      <div class="contact-content fade-target">
+        <div>
+          <h3 class="contact-title">Open to New Opportunities</h3>
+          <p class="contact-desc">Whether you're a recruiter, engineer, or researcher &mdash; I'd love to connect. Particularly interested in roles involving mechanical product development, simulation, and systems engineering.</p>
+          <a href="mailto:pathakdeep31@gmail.com" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+            pathakdeep31@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/deep-pathak-502918175/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/deep-pathak-502918175
+          </a>
+          <a href="https://github.com/Deeppathak" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            github.com/Deeppathak
+          </a>
+        </div>
+        <form action="https://formspree.io/f/mdkypqlg" method="POST" class="contact-form">
+          <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required class="form-input" />
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required class="form-input" />
+          </div>
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" placeholder="What would you like to discuss?" required class="form-input"></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message &rarr;</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <span>&copy; 2025 Deep Pathak</span>
+    <span>Mechanical Engineer &middot; Berlin, Germany</span>
+  </footer>
+
+</div>
+
+<script>
+// ── Particle Animation ──
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, animId;
+  const particles = [];
+  const COUNT = 55;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < COUNT; i++) {
+    particles.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.35 + 0.08
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(150,150,150,' + ((1 - dist / 120) * 0.12) + ')';
+          ctx.lineWidth = 0.6;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(function(p) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(120,120,120,' + p.alpha + ')';
+      ctx.fill();
+    });
+  }
+
+  function update() {
+    particles.forEach(function(p) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+  }
+
+  function loop() {
+    update();
+    draw();
+    animId = requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ── Typewriter Effect ──
+(function() {
+  const phrases = [
+    'Mechanical Engineering',
+    'CAD & FEA Simulation',
+    'Embedded Programming',
+    'Signal Processing',
+    'Systems Engineering',
+    'Product Development'
+  ];
+  const el = document.getElementById('typed-text');
+  let phraseIdx = 0, charIdx = 0, deleting = false;
+
+  function typeLoop() {
+    const current = phrases[phraseIdx];
+    if (!deleting) {
+      charIdx++;
+      el.textContent = current.slice(0, charIdx);
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(typeLoop, 2000);
+        return;
+      }
+    } else {
+      charIdx--;
+      el.textContent = current.slice(0, charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+      }
+    }
+    setTimeout(typeLoop, deleting ? 42 : 78);
+  }
+  setTimeout(typeLoop, 78);
+})();
+
+// ── Intersection Observer for Fade In ──
+(function() {
+  const targets = document.querySelectorAll('.fade-target');
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+
+  targets.forEach(function(t) { observer.observe(t); });
+})();
+</script>
+
+</body>
+</html>
