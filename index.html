@@ -14,6 +14,65 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { font-family: 'IBM Plex Sans', sans-serif; color: #0a0a0a; background: #fafafa; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: #0a0a0a;
+  background: #fafafa;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.04rem;                    /* slight base bump */
+  line-height: 1.78;
+}
+
+h1 {
+  font-size: clamp(3.6rem, 6.2vw, 5.4rem);   /* much bigger hero title */
+}
+
+h2.section-title {
+  font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+}
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  letter-spacing: 0.28em;
+}
+
+.hero-desc,
+.about-text p,
+.project-desc,
+.edu-desc,
+.contact-desc {
+  font-size: 1.38rem;                    /* ≈1.5× original */
+  line-height: 1.82;
+}
+
+.skill-item,
+.tool-card span,
+.tag,
+.project-label,
+.section-number,
+.form-label,
+.edu-date,
+.edu-school,
+.gallery-card p,
+.site-footer {
+  font-size: 1.24rem;                    /* readable bump */
+}
+
+.edu-degree,
+.project-name {
+  font-size: 1.85rem;                    /* noticeable increase */
+}
+
+.contact-title {
+  font-size: 2.4rem;
+}
+
+.btn-primary, .btn-outline, .btn-submit, .btn-contact,
+.project-link, .social-link, .contact-link {
+  font-size: 1.05rem;
+  padding: 0.9rem 1.8rem;                /* slightly larger buttons */
+}
     .font-serif { font-family: 'Playfair Display', serif; }
     .font-mono { font-family: 'IBM Plex Mono', monospace; }
     a { text-decoration: none; }
